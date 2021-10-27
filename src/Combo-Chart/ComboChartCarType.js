@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Bar, Line} from 'react-chartjs-2';
-import {dataSample} from "./dataSample";
+import {Line} from 'react-chartjs-2';
+import {carGroup} from "./dataSample";
 
-const ComboChart = () => {
+const ComboChartCarType = () => {
 
   const [listData, setListData] = useState();
 
   useEffect(() => {
-    setListData(dataSample)
+    setListData(carGroup)
   }, [])
 
   if (!listData) {
@@ -15,23 +15,24 @@ const ComboChart = () => {
   }
 
   const data = {
-    labels: listData.ageGroup.map(({age}) => age),
+    labels: listData.carGroup.map(({carName}) => carName),
     datasets: [
       {
         label: '평균 안전운전 점수',
-        data: listData.ageGroup.map(({safeCount}) => safeCount),
+        data: listData.carGroup.map(({safeCount}) => safeCount),
         fill: false, //  라인 아래 채우기
-        backgroundColor: 'rgba(54, 162, 235, 1)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor:  'rgba(255, 99, 132, 1)',
         yAxisID: 'y',
 
       },
       {
         label: '평균 누적 주행거리',
-        data: listData.ageGroup.map(({cumulativeMeter}) => cumulativeMeter),
+        data: listData.carGroup.map(({cumulativeMeter}) => cumulativeMeter),
         fill: false,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor:  'rgba(255, 99, 132, 0.2)',
+        borderColor:  'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
         yAxisID: 'y1',
         type: 'bar',
       },
@@ -65,4 +66,4 @@ const ComboChart = () => {
 }
 
 
-export default ComboChart
+export default ComboChartCarType
