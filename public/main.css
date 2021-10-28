@@ -1,0 +1,40 @@
+.speedTable {
+    width: 100%;
+    border-top: 3px solid #dbdbdb;
+}
+
+.speedTable th {
+    padding: 12px 0;
+    font-size: 12px;
+    text-align: center;
+    color: #3d3d3d;
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+     background-color: #f3f5f8;
+}
+
+.speedTable td {
+    padding: 10px 0;
+    font-size: 11px;
+    text-align: center;
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+}
+
+.backgroundGreen {
+    background-color: rgb(83, 198, 26);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
+.backgroundYellow {
+    background-color: rgb(251, 253, 61);
+    color: black;
+    font-weight: bold;
+}
+
+.backgroundRed {
+    background-color: rgb(218, 12, 12);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}

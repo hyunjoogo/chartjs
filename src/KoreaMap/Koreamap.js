@@ -1,63 +1,80 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import * as ChartGeo from "chartjs-chart-geo";
+import {Chart} from "chart.js";
+
+// const kr = fetch('./kor.json').then((r) => console.log(r)); // promise를 리턴
 
 
-const kr = fetch('./kor.json'); // promise를 리턴
-console.log(kr)
 const Koreamap = () => {
-  Promise.all([
-    fetch('./kor.topo.json')
-      .then((r) => r.json()),
-    fetch('https://gist.githubusercontent.com/mbostock/9535021/raw/928a5f81f170b767162f8f52dbad05985eae9cac/us-state-capitals.csv')
-      .then((r) => r.text())
-      .then((d) => {
-        console.log(d); // csv를 text화 한거 = d
-      Papa.parse(d, { dynamicTyping: true, header: true}).data
-    })
-  ])
-    .then(([us, data]) => {
-    const states = ChartGeo.topojson.feature(us, us.objects.states).features;
+  const [kr, setKr] = useState();
+  const [us, setUs] = useState();
+  const [data, setData] = useState();
+
+  const chartRef = useRef(null);
 
 
-    console.log(us, data, states)
-  })
-  //   const chart = new Chart(document.getElementById("canvas").getContext("2d"), {
-  //     type: 'bubbleMap',
-  //     data: {
-  //       labels: data.map((d) => d.description),
-  //       datasets: [{
-  //         outline: states,
-  //         showOutline: true,
-  //         backgroundColor: 'steelblue',
-  //         data: data.map((d) => Object.assign(d, {value: Math.round(Math.random() * 10)})),
-  //       }]
-  //     },
-  //     options: {
-  //       plugins: {
-  //         legend: {
-  //           display: false
-  //         },
-  //         datalabels: {
-  //           align: 'top',
-  //           formatter: (v) => {
-  //             return v.description;
-  //           }
-  //         }
+  useEffect(() => {
+    fetch('https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/kor.topo.json')
+      .then((r) => r.json())
+      .then(setKr)
+    fetch('https://unpkg.com/us-atlas/states-10m.json')
+      .then((r) => r.json())
+      .then(setUs)
+
+
+
+
+  }, [])
+
+
+  if (!kr) {
+    return null
+  }
+  if (!us) {
+    return null
+  }
+
+  const statesUs = ChartGeo.topojson.feature(us, us.objects.states).features;
+  const stateskr = ChartGeo.topojson.feature(kr, kr.objects.kor).features;
+  console.log(statesUs)
+  console.log(stateskr)
+  // const chart = new Chart(document.getElementById("canvas").getContext("2d"), {
+  //   type: 'bubbleMap',
+  //   data: {
+  //     labels: [].map((d) => d.description),
+  //     datasets: [{
+  //       outline: stateskr,
+  //       showOutline: true,
+  //       backgroundColor: 'steelblue',
+  //       data: [].map((d) => Object.assign(d, {value: Math.round(Math.random() * 10)})),
+  //     }]
+  //   },
+  //   options: {
+  //     plugins: {
+  //       legend: {
+  //         display: false
   //       },
-  //       scales: {
-  //         xy: {
-  //           projection: 'albersUsa',
-  //         },
-  //         r: {
-  //           size: [1, 20],
-  //         },
+  //       datalabels: {
+  //         align: 'top',
+  //         formatter: (v) => {
+  //           return v.description;
+  //         }
   //       }
+  //     },
+  //     scales: {
+  //       xy: {
+  //         projection: 'albersUsa',
+  //       },
+  //       r: {
+  //         size: [1, 20],
+  //       },
   //     }
-  //   });
+  //   }
   // });
-  return (
-    <canvas id="canvas"></canvas>
-  )
+
+return (
+  <canvas ref={chartRef} />
+)
 }
 
 
