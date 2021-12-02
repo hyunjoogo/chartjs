@@ -36,5 +36,14 @@ export const barEx = {
     {'carName': '8위', 'carValue': 30},
     {'carName': '9위', 'carValue': 20},
     {'carName': '10위', 'carValue': 7},
+  ],
+  "kb": [
+    {'carName': '월', 'carValue': 300},
+    {'carName': '화', 'carValue': 200},
+    {'carName': '수', 'carValue': 100},
+    {'carName': '목', 'carValue': 80},
+    {'carName': '금', 'carValue': 60},
+    {'carName': '토', 'carValue': 40},
+    {'carName': '일', 'carValue': 30},
   ]
 }

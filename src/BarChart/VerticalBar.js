@@ -2,6 +2,10 @@ import React, {useEffect, useRef, useState} from "react";
 import {Bar, Chart} from 'react-chartjs-2';
 import {barEx} from "./dataExample";
 import zoomPlugin from 'chartjs-plugin-zoom';
+import annotationPlugin from "chartjs-plugin-annotation";
+// import datalabelsPlugin from "chartjs-plugin-datalabels";
+
+Chart.register([annotationPlugin]);
 
 const VerticalBar = () => {
 
@@ -21,11 +25,11 @@ const VerticalBar = () => {
 
   const data = {
     // ['소나타', '아반떼'] 이런 형식으로 필요
-    labels: listData.carList.map(({carName}) => carName),
+    labels: listData.kb.map(({carName}) => carName),
     datasets: [
       {
         label: '대수',
-        data: listData.carList.map(({carValue}) => carValue),
+        data: listData.kb.map(({carValue}) => carValue),
         // 지정범위를 초과하면 다시 1번부터
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -48,29 +52,50 @@ const VerticalBar = () => {
     ],
   };
 
+
   const options = {
     responsive: true,
     plugins: {
-      zoom: {
-        limits: {
-          y: {min: 0, max: 300},
-        },
-        zoom: {
-          wheel: {
-            enabled: true,
-          },
-          drag: {
-            enabled: true,
-          },
+      annotation: {
+        annotations: {
+
+          line1: {
+            type: "line",
+            scaleID: "y",
+            borderWidth: 3,
+            borderColor: "black",
+            value: 150,
+            label: {
+              font: {
+                weight: "normal"
+              },
+              content: "평균값",
+              rotation: "auto",
+              enabled: true
+            }
+          }
         }
       },
+      // zoom: {
+      //   limits: {
+      //     y: {min: 0, max: 300},
+      //   },
+      //   zoom: {
+      //     wheel: {
+      //       enabled: true,
+      //     },
+      //     drag: {
+      //       enabled: true,
+      //     },
+      //   }
+      // },
       legend: {
         display: true,
         labels: {
           fontColor: 'rgb(255, 99, 132)'
         },
-        position : 'right',
-        onHover:function handleHover(evt, item, legend) {
+        position: 'right',
+        onHover: function handleHover(evt, item, legend) {
           data.datasets[0].backgroundColor.forEach((color, index, colors) => {
             colors[index] = index === item.index || color.length === 9 ? color : color + '4D';
             console.log(index);
@@ -83,6 +108,7 @@ const VerticalBar = () => {
         }
       },
     },
+
     animation: {
       animations: {
         tension: {
@@ -94,6 +120,7 @@ const VerticalBar = () => {
         }
       },
     },
+
     scales: {
       y: {
         title: {

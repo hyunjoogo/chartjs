@@ -17,6 +17,7 @@ class Choropleth extends React.Component {
     ]).then(([kor, us]) => {
       const nation = ChartGeo.topojson.feature(kor, kor.objects.kor).features;
       const ctx = this.chartRef.current.getContext('2d');
+      console.log(nation)
       new Chart(ctx, {
         type: 'choropleth',
         data: {
@@ -24,7 +25,7 @@ class Choropleth extends React.Component {
           datasets: [{
             label: 'States',
             outline: nation,
-            data: nation.map((d) => ({feature: d, value: Math.random() * 1000})),
+            data: nation.map((d) => ({feature: d, value: 10})),
           }]
         },
         options: {
@@ -38,7 +39,7 @@ class Choropleth extends React.Component {
               projection: 'mercator'
             },
             color: {
-              quantize: 8,
+              quantize: 10,
               legend: {
                 position: 'bottom-right',
                 align: 'left' // 수직인지 수평인지
